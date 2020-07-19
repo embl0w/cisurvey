@@ -1,0 +1,18 @@
+on: push
+jobs:
+  survey:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - run: id
+      - run: sudo ./survey_setup.sh
+      - run: sudo ./survey_hardware.sh
+      - run: sudo ./survey_kernel.sh
+      - run: sudo ./survey_userland.sh
+      - run: sudo ./survey_loopback.sh
+      - run: time sudo ./survey_debootstrap.sh buster armhf
+      - run: time sudo ./survey_debootstrap.sh buster arm64
+      - run: time sudo ./survey_debootstrap.sh buster armhf http://archive.raspbian.org/raspbian

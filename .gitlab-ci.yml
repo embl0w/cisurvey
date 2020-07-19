@@ -1,0 +1,28 @@
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
+    - when: never
+
+.survey:
+  script:
+    - ./survey_setup.sh
+    - ./survey_hardware.sh
+    - ./survey_kernel.sh
+    - ./survey_userland.sh
+    - ./survey_loopback.sh
+    - time ./survey_debootstrap.sh buster armhf
+    - time ./survey_debootstrap.sh buster arm64
+    - time ./survey_debootstrap.sh buster armhf http://archive.raspbian.org/raspbian
+
+Ubuntu 18.04:
+  extends: .survey
+  image: ubuntu:18.04
+
+Ubuntu 20.04:
+  extends: .survey
+  image: ubuntu:20.04
+
+Debian 10:
+  extends: .survey
+  image: debian:10
