@@ -1,0 +1,20 @@
+strategy:
+  matrix:
+    ubuntu2004:
+      vmImage: ubuntu-20.04
+    ubuntu1804:
+      vmImage: ubuntu-18.04
+
+pool:
+  vmImage: $(vmImage)
+
+steps:
+  - script: id
+  - script: sudo ./survey_setup.sh
+  - script: sudo ./survey_hardware.sh
+  - script: sudo ./survey_kernel.sh
+  - script: sudo ./survey_userland.sh
+  - script: sudo ./survey_loopback.sh
+  - script: time sudo ./survey_debootstrap.sh buster armhf
+  - script: time sudo ./survey_debootstrap.sh buster arm64
+  - script: time sudo ./survey_debootstrap.sh buster armhf http://archive.raspbian.org/raspbian

@@ -1,14 +1,14 @@
 #!/bin/bash
 
-set -x
+set -ex
 
 SUITE=$1
 ARCH=$2
 MIRROR=$3
-TARGET=build/$SUITE-$ARCH
+TARGET=build.$$/$SUITE-$ARCH
 IMAGE=$TARGET.squashfs
 
-mkdir -p build
+mkdir -p $TARGET
 
 qemu-debootstrap --arch=$ARCH --variant=minbase $SUITE $TARGET $MIRROR
 

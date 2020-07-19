@@ -3,8 +3,8 @@
 set -x
 
 lscpu
-lscpu -e --output-all
-lscpu -p --output-all
+lscpu -e
+lscpu -p
 lscpu -C
 lspci -v
 lsusb -v
